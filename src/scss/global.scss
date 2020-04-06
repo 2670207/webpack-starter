@@ -1,0 +1,19 @@
+//@import '~normalize.css';
+
+//base
+@import './base/main';
+
+//abstracts
+@import './abstract/constants';
+@import './abstract/placeholder';
+@import './abstract/mixins';
+
+//layouts
+@import './layouts/footer';
+@import './layouts/header';
+
+//components
+@import './components/logo';
+
+//pages
+@import './pages/index';
