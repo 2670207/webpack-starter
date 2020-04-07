@@ -57,5 +57,19 @@ module.exports = () => {
     );
   });
 
+  // html pages;
+  const htmlPages = glob.sync(path.join(__dirname, '/src/html/*.html'));
+  htmlPages.forEach((_path) => {
+    const filename = path.basename(_path, '.html');
+
+    config.plugins.push(
+      new HtmlWebpackPlugin({
+        filename: `${filename}.html`,
+        template: `./src/html/${filename}.html`,
+      }),
+    );
+  });
+
   return config;
+
 };

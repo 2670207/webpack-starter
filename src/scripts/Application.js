@@ -1,1 +1,1 @@
-export default class Applcation{}
+export default class Applcation {}
