@@ -1,12 +1,14 @@
 //@import '~normalize.css';
 
-//base
-@import './base/main';
+
 
 //abstracts
 @import './abstract/constants';
 @import './abstract/placeholder';
 @import './abstract/mixins';
+
+//base
+@import './base/main';
 
 //layouts
 @import './layouts/footer';
