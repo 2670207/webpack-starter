@@ -3,6 +3,8 @@ module.exports = {
     browser: true,
     es6: true,
   },
+  parser: "babel-eslint",
+  plugins: ["babel"],
   extends: [
     'airbnb-base',
   ],
