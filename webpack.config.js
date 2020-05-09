@@ -37,6 +37,24 @@ module.exports = () => {
           test: /\.pug$/,
           loaders: ['html-loader', 'pug-html-loader?pretty'],
         },
+        {
+          test: /\.(png|jpg|jpeg|gif?)(\?[a-z0-9=&.]+)?$/,
+          loader: 'file-loader',
+          options: {
+            esModule: false,
+            outputPath: 'images',
+            publicPath: '../images/',
+          },
+        },
+        {
+          test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
+          loader: 'file-loader',
+          options: {
+            esModule: false,
+            outputPath: 'fonts',
+            publicPath: '../fonts/',
+          },
+        },
       ],
     },
     plugins: [

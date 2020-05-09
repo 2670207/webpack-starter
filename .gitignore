@@ -1,3 +1,4 @@
 node_modules/
 dist/
-fix.md
+tasks.md
+package-lock.json
