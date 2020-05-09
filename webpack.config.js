@@ -9,7 +9,7 @@ module.exports = () => {
     entry: './src/index.js',
     devtool: 'source-map',
     output: {
-      filename: './scripts/app.js',
+      filename: './js/app.js',
       path: path.resolve(__dirname, 'dist'),
     },
     module: {
@@ -41,7 +41,7 @@ module.exports = () => {
     },
     plugins: [
       new CleanWebpackPlugin(),
-      new MiniCssExtractPlugin({ filename: './styles/style.css' }),
+      new MiniCssExtractPlugin({ filename: './css/style.css' }),
     ],
   };
 
