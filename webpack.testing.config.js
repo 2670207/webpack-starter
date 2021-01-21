@@ -10,12 +10,12 @@ module.exports = () => {
       application: './src/application.js',
       vendors: './src/vendors.js',
       fonts: ['./src/scss/fonts.scss'],
-      styles: ['./src/scss/global.scss'],
+      styles: ['./src/scss/styles.scss'],
     },
     optimization: {
       minimize: true,
       minimizer: [
-       // new CssMinimizerPlugin(),
+        // new CssMinimizerPlugin(),
       ],
     },
     output: {
