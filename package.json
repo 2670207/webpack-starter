@@ -20,8 +20,7 @@
   },
   "homepage": "https://github.com/2670207/webpack-starter#readme",
   "dependencies": {
-    "bootstrap": "^5.0.0-beta1",
-    "popper.js": "^1.16.1"
+   
   },
   "devDependencies": {
     "clean-webpack-plugin": "^3.0.0",
