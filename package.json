@@ -6,8 +6,7 @@
   "scripts": {
     "watch": "webpack --mode development --watch ",
     "build": "webpack --mode production",
-    "dev": "webpack --mode development",
-    "testing-webpack": "webpack --mode production --config webpack.testing.config.js"
+    "dev": "webpack --mode development"
   },
   "repository": {
     "type": "git",
@@ -20,7 +19,7 @@
   },
   "homepage": "https://github.com/2670207/webpack-starter#readme",
   "dependencies": {
-   
+
   },
   "devDependencies": {
     "clean-webpack-plugin": "^3.0.0",
