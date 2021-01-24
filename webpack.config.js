@@ -1,35 +1,48 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const webpack = require('webpack');
+const path = require('path');
+const RemovePlugin = require('remove-files-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 
 module.exports = () => {
 
   const config = {
     entry: {
-      application: './src/application.js',
-      vendors: './src/vendors.js',
+      'scripts/application.js': './src/application.js',
+      'scripts/vendors.js': './src/vendors.js',
       fonts: ['./src/scss/fonts.scss'],
       styles: ['./src/scss/styles.scss'],
     },
     optimization: {
       minimize: true,
       minimizer: [
-        // new CssMinimizerPlugin(),
+        new CssMinimizerPlugin(),
+        new UglifyJsPlugin({test: /\.js(\?.*)?$/i,})
       ],
     },
+
     output: {
-      filename: '[name].js',
-      path: __dirname + '/../assets',
-      publicPath: '',
+      path: path.resolve(__dirname, '../assets/'),
+      filename: '[name]'
     },
 
 
     plugins: [
-      new CleanWebpackPlugin(),
       new webpack.ProvidePlugin({$: 'jquery', jQuery: 'jquery', 'window.jQuery': 'jquery'}),
       new webpack.ProgressPlugin(),
-      new MiniCssExtractPlugin({filename: 'css/[name].css'})
+      new MiniCssExtractPlugin({filename: 'css/[name].css'}),
+      new CleanWebpackPlugin(),
+      new RemovePlugin({
+        after: {
+          root: '../assets',
+          include: ['fonts', 'styles'],
+         // trash: true
+        }
+      })
+
     ],
 
     module: {
@@ -40,7 +53,6 @@ module.exports = () => {
             {loader: MiniCssExtractPlugin.loader, options: {publicPath: '../', esModule: true}},
             {loader: 'css-loader', options: { sourceMap: true, importLoaders: 1}},
             {loader: 'sass-loader', options: { sourceMap: true }},
-
           ],
         },
         {
@@ -58,8 +70,6 @@ module.exports = () => {
 
       ]
     },
-
   };
-
   return config;
 };
