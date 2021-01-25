@@ -13,14 +13,14 @@ module.exports = () => {
     entry: {
       'scripts/application.js': './src/application.js',
       'scripts/vendors.js': './src/vendors.js',
-      fonts: ['./src/scss/fonts.scss'],
-      styles: ['./src/scss/styles.scss'],
+      'fonts.js': ['./src/scss/fonts.scss'],
+      'styles.js': ['./src/scss/styles.scss'],
     },
     optimization: {
       minimize: true,
       minimizer: [
-        new CssMinimizerPlugin(),
-        new UglifyJsPlugin({test: /\.js(\?.*)?$/i,})
+      //  new CssMinimizerPlugin(),
+      //  new UglifyJsPlugin({test: /\.js(\?.*)?$/i,})
       ],
     },
 
@@ -38,11 +38,10 @@ module.exports = () => {
       new RemovePlugin({
         after: {
           root: '../assets',
-          include: ['fonts', 'styles'],
+          include: ['fonts.js', 'styles.js'],
          // trash: true
         }
-      })
-
+       })
     ],
 
     module: {
@@ -64,7 +63,7 @@ module.exports = () => {
           test: /\.(woff|woff2)(\?.*)?$/,
           use: {
             loader: 'file-loader',
-            options: { outputPath: 'fonts/', name: '[name].[ext]'}
+            options: { outputPath: './fonts/', name: '[name].[ext]'}
           },
         },
 
