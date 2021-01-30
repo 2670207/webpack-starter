@@ -11,10 +11,10 @@ module.exports = () => {
 
   const config = {
     entry: {
-      'scripts/application.js': './src/application.js',
-      'scripts/vendors.js': './src/vendors.js',
-      'fonts.js': ['./src/scss/fonts.scss'],
-      'styles.js': ['./src/scss/styles.scss'],
+      application: './src/application.js',
+      vendors: './src/vendors.js',
+      fonts: './src/scss/fonts.scss',
+      styles: './src/scss/styles.scss',
     },
     optimization: {
       minimize: true,
@@ -26,22 +26,15 @@ module.exports = () => {
 
     output: {
       path: path.resolve(__dirname, '../assets/'),
-      filename: '[name]'
+      //filename: '[name]'
     },
 
 
     plugins: [
       new webpack.ProvidePlugin({$: 'jquery', jQuery: 'jquery', 'window.jQuery': 'jquery'}),
       new webpack.ProgressPlugin(),
-      new MiniCssExtractPlugin({filename: 'css/[name].css'}),
+      new MiniCssExtractPlugin({filename:  'css/[name].css'}),
       new CleanWebpackPlugin(),
-      new RemovePlugin({
-        after: {
-          root: '../assets',
-          include: ['fonts.js', 'styles.js'],
-         // trash: true
-        }
-       })
     ],
 
     module: {
@@ -57,17 +50,20 @@ module.exports = () => {
         {
           test: /\.(png|jpe?g|gif|svg)$/i,
           loader: 'file-loader',
-          options: {outputPath: 'images/', name: '[name].[ext]'},
+          options: {outputPath: './images/', name: '[name].[ext]'},
         },
         {
           test: /\.(woff|woff2)(\?.*)?$/,
           use: {
             loader: 'file-loader',
-            options: { outputPath: './fonts/', name: '[name].[ext]'}
+            options: { outputPath:   './fonts/', name: '[name].[ext]'}
           },
         },
 
       ]
+    },
+    resolve: {
+      extensions: [".js", ".css", ".scss"]
     },
   };
   return config;

@@ -19,7 +19,9 @@
   },
   "homepage": "https://github.com/2670207/webpack-starter#readme",
   "dependencies": {
+    "@popperjs/core": "^2.6.0",
     "bootstrap": "^5.0.0-beta1",
+    "jquery": "^3.5.1",
     "popper.js": "^1.16.1"
   },
   "devDependencies": {
