@@ -1,0 +1,10 @@
+
+$global-width: rem-calc(1320px);
+$breakpoints: (
+      small: 0,
+      medium: 640px,
+      large: 1024px,
+      x-large: 1200px,
+      xxlarge: 1440px,
+);
+$breakpoint-classes: (small medium large x-large);

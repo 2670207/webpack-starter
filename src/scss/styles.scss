@@ -1,5 +1,11 @@
-//@import '~normalize.css';
-
-
+@import "abstract/variables";
+@import "abstract/functions/functions";
+@import "abstract/mixins/mixins";
+@import "abstract/helpers/helpers";
 
 //vendors
+@import "vendors/foundation/foundation";
+@import "vendors/owlCarousel/owlCarousel";
+
+@import "layout/default";
+

@@ -1,0 +1,9 @@
+@function rem($size, $global-size: 16px) {
+
+  @if unit($size) == 'px' {
+    $value: strip-unit($size) * 1rem;
+  }
+  $rem-size: $size / $global-size;
+
+  @return #{$rem-size}rem;
+}
