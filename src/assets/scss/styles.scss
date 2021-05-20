@@ -1,0 +1,25 @@
+
+//abstracts (переменные, функции, миксы и т.д.)
+@import "./abstracts/contantants";
+@import "./abstracts/mixins";
+
+//fonts
+@import "./fonts";
+
+//vendors (сторонние плагины)
+@import './vendors/foundation/foundation';
+
+
+//base (глобальные стили, хедер, футер)
+//@import "./base/header";
+@import "./base/layout";
+
+
+//elements (элементы интерфейса кнопки, формы, скролл и т.д.
+@import "elements/button";
+
+// components (компоненты законченный смысловой блок)
+//@import "components/modal";
+
+//pages (стили относящие к страницам)
+//@import "./pages/index"

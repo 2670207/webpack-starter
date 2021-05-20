@@ -1,70 +1,111 @@
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const webpack = require('webpack');
-const path = require('path');
-const RemovePlugin = require('remove-files-webpack-plugin');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const path = require('path')
+const fs = require('fs')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const {CleanWebpackPlugin}  = require('clean-webpack-plugin');
+const glob = require("glob");
 
+const PATHS = {
+  src: path.join(__dirname, 'src'),
+  dist: path.join(__dirname, '../assets/'),
+  assets: '',
+  public: './'
+}
 
-module.exports = () => {
+if (!fs.existsSync(PATHS.dist)){
+  fs.mkdirSync(PATHS.dist);
+}
+const isCleanFilesProject = !fs.readdirSync(PATHS.dist).includes('webpack');
 
-  const config = {
-    entry: {
-      application: './src/application.js',
-      vendors: './src/vendors.js',
-      fonts: './src/scss/fonts.scss',
-      styles: './src/scss/styles.scss',
+ 
+module.exports = {
+  externals: {
+    paths: PATHS
+  },
+  entry: {
+    application: PATHS.src,
+    vendors: `${PATHS.src}/vendors.js`,
+  },
+  output: {
+    filename: `${PATHS.assets}js/[name].js`,
+    path: PATHS.dist,
+    publicPath: PATHS.public
+  },
+  optimization: {
+    splitChunks: {
+    //  chunks: 'all',
+    //  name: false,
     },
-    optimization: {
-      minimize: true,
-      minimizer: [
-      //  new CssMinimizerPlugin(),
-      //  new UglifyJsPlugin({test: /\.js(\?.*)?$/i,})
-      ],
-    },
-
-    output: {
-      path: path.resolve(__dirname, '../assets/'),
-      //filename: '[name]'
-    },
-
-
-    plugins: [
-      new webpack.ProvidePlugin({$: 'jquery', jQuery: 'jquery', 'window.jQuery': 'jquery'}),
-      new webpack.ProgressPlugin(),
-      new MiniCssExtractPlugin({filename:  'css/[name].css'}),
-      new CleanWebpackPlugin(),
-    ],
-
-    module: {
-      rules: [
+  },
+  module: {
+    rules: [
+    {
+      test: /\.js$/,
+      loader: 'babel-loader',
+      exclude: '/node_modules/'
+    }, 
+     {
+      test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+      loader: 'file-loader',
+      options: {
+        context: PATHS.src,
+        name: 'fonts/[name].[ext]',
+        publicPath: '../',
+      }
+    }, 
+    {
+      test: /\.(png|jpg|gif|svg)$/,
+      loader: 'file-loader',
+      options: {
+        name: '[path][name].[ext]',
+        context: PATHS.src,
+        publicPath: '../../',
+      }
+    }, 
+    {
+      test: /\.scss$/,
+      use: [
+        'style-loader',
+        MiniCssExtractPlugin.loader,
         {
-          test: /\.scss$/i,
-          use: [
-            {loader: MiniCssExtractPlugin.loader, options: {publicPath: '../', esModule: true}},
-            {loader: 'css-loader', options: { sourceMap: true, importLoaders: 1}},
-            {loader: 'sass-loader', options: { sourceMap: true }},
-          ],
-        },
+          loader: 'css-loader',
+          options: { sourceMap: true }
+        }, 
         {
-          test: /\.(png|jpe?g|gif|svg)$/i,
-          loader: 'file-loader',
-          options: {outputPath: './images/', name: '[name].[ext]'},
+          loader: 'sass-loader',
+          options: { sourceMap: true }
         },
-        {
-          test: /\.(woff|woff2)(\?.*)?$/,
-          use: {
-            loader: 'file-loader',
-            options: { outputPath:   './fonts/', name: '[name].[ext]'}
-          },
-        },
-
       ]
-    },
-    resolve: {
-      extensions: [".js", ".css", ".scss"]
-    },
-  };
-  return config;
-};
+    }, {
+      test: /\.css$/,
+      use: [
+        MiniCssExtractPlugin.loader,
+        {
+          loader: 'css-loader',
+          options: { sourceMap: true }
+        }, 
+      ]
+    }]
+  },
+  resolve: {
+    alias: {
+      'images': PATHS.src + '/' + PATHS.assets + 'images', 
+      '~': PATHS.src,
+    }
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: `${PATHS.assets}css/[name].css`,
+    }),
+    new CopyWebpackPlugin([
+      { from: `${PATHS.src}/${PATHS.assets}images`, to: `${PATHS.assets}images` },
+     { from: `${PATHS.src}/${PATHS.assets}fonts`, to: `${PATHS.assets}fonts` }, { from: `${PATHS.src}/static`, to: '' },
+    ]),
+  ],
+}
+
+if(isCleanFilesProject){
+  module.exports.plugins.push(new CleanWebpackPlugin()) //protection from delete src file
+}
+

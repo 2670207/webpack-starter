@@ -1,3 +1,9 @@
-import 'jquery';
+/* подключение Foundation
 import Foundation from 'foundation-sites';
-$(document).foundation();
+
+window['Foundation'] = Foundation;
+document.addEventListener('DomContentLoaded', ()=>{
+    $(document).foundation();
+})
+*/
+
