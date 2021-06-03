@@ -68,5 +68,5 @@
     }
   }
 }
-@include xy-margin-grid-classes-custom($gutter-position: left right, $vertical: false, $wrapping-selector: '.grid')
-@include block-grid-classes(true,false)
+@include xy-margin-grid-classes-custom($gutter-position: left right, $vertical: false, $wrapping-selector: '.grid');
+@include block-grid-classes(true,false);

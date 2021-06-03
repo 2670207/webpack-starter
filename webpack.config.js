@@ -1,10 +1,7 @@
 const path = require('path')
 const fs = require('fs')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const {CleanWebpackPlugin}  = require('clean-webpack-plugin');
-const glob = require("glob");
 
 const PATHS = {
   src: path.join(__dirname, 'src'),
@@ -17,15 +14,17 @@ if (!fs.existsSync(PATHS.dist)){
   fs.mkdirSync(PATHS.dist);
 }
 const isCleanFilesProject = !fs.readdirSync(PATHS.dist).includes('webpack');
+const isProduction = process.argv[process.argv.indexOf('--mode') + 1] === 'production';
 
- 
 module.exports = {
+
   externals: {
     paths: PATHS
   },
   entry: {
     application: PATHS.src,
     vendors: `${PATHS.src}/vendors.js`,
+   //module_name_space:  `${PATHS.src}/module_name_space/page.js`, //подключение отдельных модулей
   },
   output: {
     filename: `${PATHS.assets}js/[name].js`,
@@ -67,7 +66,12 @@ module.exports = {
       test: /\.scss$/,
       use: [
         'style-loader',
-        MiniCssExtractPlugin.loader,
+        {
+          loader: MiniCssExtractPlugin.loader,
+          options: {
+            esModule: false,
+          },
+        },
         {
           loader: 'css-loader',
           options: { sourceMap: true }
@@ -98,11 +102,12 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: `${PATHS.assets}css/[name].css`,
     }),
-    new CopyWebpackPlugin([
-      { from: `${PATHS.src}/${PATHS.assets}images`, to: `${PATHS.assets}images` },
-     { from: `${PATHS.src}/${PATHS.assets}fonts`, to: `${PATHS.assets}fonts` }, { from: `${PATHS.src}/static`, to: '' },
-    ]),
+
   ],
+}
+
+if(!isProduction){
+  module.exports.devtool ='source-map';
 }
 
 if(isCleanFilesProject){
