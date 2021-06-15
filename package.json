@@ -1,6 +1,6 @@
 {
   "name": "webpack-starter",
-  "version": "0.0.2",
+  "version": "1.0.1",
   "description": "Startert for webpack",
   "main": "./src/index.js",
   "scripts": {
